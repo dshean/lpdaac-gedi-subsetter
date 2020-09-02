@@ -96,11 +96,11 @@ def lpdaac_subset_gedi(DIRECTORY, PRODUCT, VERSION, BBOX=None, TIME=None,
             dtstart=dateutil.parser.parse(TIME[0]),
             until=dateutil.parser.parse(TIME[1]))
         #-- create a regular expression pattern for days of the year
-        pattern = '|'.join(datetime.datetime.strftime(t,'%Y%j') for t in days)
+        pattern = r'|'.join(datetime.datetime.strftime(t,'%Y%j') for t in days)
         #-- complete regular expression pattern for reducing to time
         args = (PRODUCT,pattern)
-        rx = re.compile(('({0})_({1})(\d{{2}})(\d{{2}})(\d{{2}})_O(\d{{5}})_'
-            'T(\d{{5}})_(\d{{2}})_(\d{{3}})_(\d{{2}})\.h5').format(*args))
+        rx = re.compile((r'({0})_({1})(\d{{2}})(\d{{2}})(\d{{2}})_O(\d{{5}})_'
+            r'T(\d{{5}})_(\d{{2}})_(\d{{3}})_(\d{{2}})\.h5').format(*args))
         #-- reduce list to times of interest
         file_list = sorted([f for f in response['data'] if rx.search(f)])
     else:
